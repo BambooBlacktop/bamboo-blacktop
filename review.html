@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leave a Review | Bamboo Blacktop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1B1B18;
+    --paper: #F6F4EC;
+    --paper-dim: #EDE9DC;
+    --bamboo: #33553D;
+    --bamboo-light: #6E9464;
+    --bamboo-pale: #E1E9D9;
+    --tan: #B99B62;
+    --line-yellow: #DFA83A;
+    --muted: #6B675C;
+    --error: #B23A3A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  h1, .display {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  a { color: inherit; }
+
+  header {
+    background: var(--paper);
+    border-bottom: 1px solid rgba(27,27,24,0.1);
+    padding: 18px 32px;
+  }
+  .nav-inner { max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-size: 22px; text-decoration: none; }
+  .logo span.dot { color: var(--bamboo); }
+  .back-link { font-size: 14px; color: var(--muted); text-decoration: none; }
+  .back-link:hover { color: var(--bamboo); }
+
+  main { flex: 1; padding: 60px 24px; }
+  .form-wrap { max-width: 560px; margin: 0 auto; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--bamboo);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h1 { font-size: clamp(30px, 6vw, 44px); margin-bottom: 12px; }
+  .subtext { color: var(--muted); font-size: 16px; margin-bottom: 40px; }
+
+  form { display: flex; flex-direction: column; gap: 22px; }
+  label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .optional-tag { color: var(--muted); text-transform: none; letter-spacing: 0; font-family: 'Inter', sans-serif; }
+  input[type="text"], textarea {
+    width: 100%;
+    background: var(--paper-dim);
+    border: 1px solid rgba(27,27,24,0.15);
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    border-radius: 3px;
+  }
+  input[type="text"]:focus, textarea:focus {
+    outline: none;
+    border-color: var(--bamboo);
+  }
+  textarea { resize: vertical; min-height: 120px; }
+
+  .star-picker { display: flex; gap: 6px; }
+  .star-picker button {
+    background: none; border: none; cursor: pointer;
+    font-size: 34px; line-height: 1; padding: 0;
+    color: rgba(27,27,24,0.2);
+    transition: color 0.1s ease, transform 0.1s ease;
+  }
+  .star-picker button:hover { transform: scale(1.1); }
+  .star-picker button.active { color: var(--line-yellow); }
+
+  .field-error {
+    color: var(--error);
+    font-size: 13px;
+    margin-top: 6px;
+    display: none;
+  }
+  .field-error.show { display: block; }
+
+  .btn-primary {
+    background: var(--line-yellow); color: var(--ink);
+    padding: 18px 32px; font-weight: 700; font-size: 15px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    border-radius: 3px; border: 2px solid var(--line-yellow);
+    box-shadow: 0 8px 24px rgba(223,168,58,0.35);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(223,168,58,0.45); }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .form-message {
+    font-size: 14px;
+    padding: 12px 16px;
+    border-radius: 3px;
+    display: none;
+  }
+  .form-message.error { display: block; background: rgba(178,58,58,0.1); color: var(--error); }
+
+  .thank-you {
+    display: none;
+    text-align: center;
+    background: var(--bamboo-pale);
+    border: 1px solid rgba(51,85,61,0.2);
+    padding: 48px 36px;
+  }
+  .thank-you.show { display: block; }
+  .thank-you h2 { font-family: 'Big Shoulders Display', sans-serif; text-transform: uppercase; color: var(--bamboo); font-size: 28px; margin-bottom: 14px; }
+  .thank-you p { color: var(--muted); margin-bottom: 24px; }
+  .thank-you a {
+    display: inline-block;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  footer {
+    background: var(--ink); color: rgba(246,244,236,0.5);
+    padding: 24px 32px; text-align: center; font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html" class="logo display">Bamboo<span class="dot">.</span>Blacktop</a>
+    <a href="index.html" class="back-link">&larr; Back to site</a>
+  </div>
+</header>
+
+<main>
+  <div class="form-wrap">
+
+    <div id="review-form-section">
+      <div class="eyebrow">Tell us how it went</div>
+      <h1>Leave a review</h1>
+      <p class="subtext">Had work done by Bamboo Blacktop? We'd love to hear about it. Your review is checked before it goes live on the site.</p>
+
+      <div id="form-message" class="form-message"></div>
+
+      <form id="review-form" novalidate>
+
+        <div>
+          <label for="name">Your name <span class="optional-tag">(required)</span></label>
+          <input type="text" id="name" name="name" maxlength="80">
+          <div class="field-error" id="name-error">Please enter your name.</div>
+        </div>
+
+        <div>
+          <label for="city">City <span class="optional-tag">(optional)</span></label>
+          <input type="text" id="city" name="city" maxlength="80" placeholder="e.g. Taber, AB">
+        </div>
+
+        <div>
+          <label for="rating">Rating <span class="optional-tag">(required)</span></label>
+          <div class="star-picker" id="star-picker">
+            <button type="button" data-value="1" aria-label="1 star">★</button>
+            <button type="button" data-value="2" aria-label="2 stars">★</button>
+            <button type="button" data-value="3" aria-label="3 stars">★</button>
+            <button type="button" data-value="4" aria-label="4 stars">★</button>
+            <button type="button" data-value="5" aria-label="5 stars">★</button>
+          </div>
+          <input type="hidden" id="rating" name="rating" value="0">
+          <div class="field-error" id="rating-error">Please choose a star rating.</div>
+        </div>
+
+        <div>
+          <label for="review">Your review <span class="optional-tag">(required)</span></label>
+          <textarea id="review" name="review" maxlength="1000" placeholder="Tell us about the job..."></textarea>
+          <div class="field-error" id="review-error">Please write a short review.</div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="submit-btn">Submit review</button>
+      </form>
+    </div>
+
+    <div class="thank-you" id="thank-you">
+      <h2>Thank you!</h2>
+      <p>Your review has been submitted and will appear on the site once it's been checked.</p>
+      <a href="index.html">Back to the homepage</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  Bamboo Blacktop — Seal coating & crack filling in Taber, Alberta.
+</footer>
+
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Project credentials (URL + public anon key) -->
+<script src="config.js"></script>
+
+<script>
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const form = document.getElementById('review-form');
+  const formSection = document.getElementById('review-form-section');
+  const thankYou = document.getElementById('thank-you');
+  const formMessage = document.getElementById('form-message');
+  const submitBtn = document.getElementById('submit-btn');
+
+  const nameInput = document.getElementById('name');
+  const cityInput = document.getElementById('city');
+  const ratingInput = document.getElementById('rating');
+  const reviewInput = document.getElementById('review');
+
+  const nameError = document.getElementById('name-error');
+  const ratingError = document.getElementById('rating-error');
+  const reviewError = document.getElementById('review-error');
+
+  const starButtons = document.querySelectorAll('#star-picker button');
+
+  starButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const value = parseInt(button.getAttribute('data-value'), 10);
+      ratingInput.value = value;
+
+      starButtons.forEach((b) => {
+        const bValue = parseInt(b.getAttribute('data-value'), 10);
+        b.classList.toggle('active', bValue <= value);
+      });
+    });
+  });
+
+  function validateForm() {
+    let isValid = true;
+
+    nameError.classList.remove('show');
+    ratingError.classList.remove('show');
+    reviewError.classList.remove('show');
+
+    if (nameInput.value.trim() === '') {
+      nameError.classList.add('show');
+      isValid = false;
+    }
+
+    if (parseInt(ratingInput.value, 10) < 1) {
+      ratingError.classList.add('show');
+      isValid = false;
+    }
+
+    if (reviewInput.value.trim() === '') {
+      reviewError.classList.add('show');
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    formMessage.classList.remove('error');
+    formMessage.textContent = '';
+
+    if (!validateForm()) {
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    const { error } = await supabaseClient
+      .from('reviews')
+      .insert([{
+        name: nameInput.value.trim(),
+        city: cityInput.value.trim() || null,
+        rating: parseInt(ratingInput.value, 10),
+        review: reviewInput.value.trim(),
+        approved: false
+      }]);
+
+    if (error) {
+      formMessage.textContent = 'Sorry, something went wrong submitting your review. Please try again.';
+      formMessage.classList.add('error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit review';
+      console.error('Supabase insert error:', error);
+      return;
+    }
+
+    formSection.style.display = 'none';
+    thankYou.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
