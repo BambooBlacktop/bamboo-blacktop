@@ -226,8 +226,6 @@
 <script src="config.js"></script>
 
 <script>
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   const form = document.getElementById('review-form');
   const formSection = document.getElementById('review-form-section');
   const thankYou = document.getElementById('thank-you');
@@ -256,6 +254,15 @@
       });
     });
   });
+
+  let supabaseClient = null;
+  try {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  } catch (err) {
+    console.error('Supabase client setup failed:', err);
+    formMessage.textContent = 'This form is not fully set up yet (Supabase connection missing). The form still works below, but submitting will not save anywhere until this is fixed.';
+    formMessage.classList.add('error');
+  }
 
   function validateForm() {
     let isValid = true;
@@ -288,6 +295,12 @@
     formMessage.textContent = '';
 
     if (!validateForm()) {
+      return;
+    }
+
+    if (!supabaseClient) {
+      formMessage.textContent = 'This form is not connected to Supabase yet, so the review cannot be saved. Please check config.js.';
+      formMessage.classList.add('error');
       return;
     }
 
