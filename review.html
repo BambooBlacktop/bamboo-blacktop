@@ -310,7 +310,7 @@
     const { error } = await supabaseClient
       .from('reviews')
       .insert([{
-        name: nameInput.value.trim(),
+        customer_name: nameInput.value.trim(),
         city: cityInput.value.trim() || null,
         rating: parseInt(ratingInput.value, 10),
         review: reviewInput.value.trim(),
