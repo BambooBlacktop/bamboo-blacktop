@@ -481,7 +481,7 @@
       const card = document.createElement('div');
       card.className = 'review-card';
 
-      const location = review.city ? `— ${review.name}, ${review.city}` : `— ${review.name}`;
+      const location = review.city ? `— ${review.customer_name}, ${review.city}` : `— ${review.customer_name}`;
 
       card.innerHTML = `
         <div class="review-stars">${starString(review.rating)}</div>
