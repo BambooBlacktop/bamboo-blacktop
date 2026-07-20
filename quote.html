@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request a Free Quote | Bamboo Blacktop</title>
+<title>Request a Free Quote | Bamboo Property Care</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -44,8 +44,8 @@
     border-bottom: 1px solid rgba(27,27,24,0.1);
     padding: 18px 32px;
   }
-  .nav-inner { max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-size: 22px; text-decoration: none; }
+  .nav-inner { max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .logo { font-size: 20px; text-decoration: none; white-space: nowrap; }
   .logo span.dot { color: var(--bamboo); }
   .back-link { font-size: 14px; color: var(--muted); text-decoration: none; }
   .back-link:hover { color: var(--bamboo); }
@@ -160,7 +160,7 @@
 
 <header>
   <div class="nav-inner">
-    <a href="index.html" class="logo display">Bamboo<span class="dot">.</span>Blacktop</a>
+    <a href="index.html" class="logo display">Bamboo<span class="dot">.</span>Property Care</a>
     <a href="index.html" class="back-link">&larr; Back to site</a>
   </div>
 </header>
@@ -203,10 +203,9 @@
         <fieldset>
           <legend>Service <span class="optional-tag">(select at least one, required)</span></legend>
           <div class="choice-grid" id="service-group">
-            <label class="choice-option"><input type="checkbox" name="service" value="Asphalt seal coating"> Asphalt seal coating</label>
-            <label class="choice-option"><input type="checkbox" name="service" value="Asphalt crack filling"> Asphalt crack filling</label>
-            <label class="choice-option"><input type="checkbox" name="service" value="Concrete sealing"> Concrete sealing</label>
-            <label class="choice-option"><input type="checkbox" name="service" value="Concrete crack & joint repair"> Concrete crack & joint repair</label>
+            <label class="choice-option"><input type="checkbox" name="service" value="Driveway power washing"> Driveway power washing</label>
+            <label class="choice-option"><input type="checkbox" name="service" value="Weed removal"> Weed removal</label>
+            <label class="choice-option"><input type="checkbox" name="service" value="Crack resealing"> Crack resealing</label>
             <label class="choice-option"><input type="checkbox" name="service" value="Window cleaning"> Window cleaning</label>
             <label class="choice-option"><input type="checkbox" name="service" value="Lawn cutting"> Lawn cutting</label>
             <label class="choice-option"><input type="checkbox" name="service" value="Junk removal"> Junk removal</label>
@@ -230,7 +229,7 @@
           <label class="photo-drop" for="photos">
             <span class="icon">📷</span>
             Tap to choose photos
-            <div class="hint">A few photos of the driveway or lot help us quote accurately</div>
+            <div class="hint">A few photos of the driveway or property help us quote accurately</div>
           </label>
           <input type="file" id="photos" name="photos" accept="image/*" multiple>
           <div class="photo-preview-list" id="photo-preview-list"></div>
@@ -259,7 +258,7 @@
 </main>
 
 <footer>
-  Bamboo Blacktop — Pavement & property maintenance in Taber, Alberta.
+  Bamboo Property Care — Driveway cleaning & property maintenance in Taber, Alberta.
 </footer>
 
 <!-- Supabase JS SDK -->
