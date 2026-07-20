@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leave a Review | Bamboo Blacktop</title>
+<title>Leave a Review | Bamboo Property Care</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -44,8 +44,8 @@
     border-bottom: 1px solid rgba(27,27,24,0.1);
     padding: 18px 32px;
   }
-  .nav-inner { max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-  .logo { font-size: 22px; text-decoration: none; }
+  .nav-inner { max-width: 700px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .logo { font-size: 20px; text-decoration: none; white-space: nowrap; }
   .logo span.dot { color: var(--bamboo); }
   .back-link { font-size: 14px; color: var(--muted); text-decoration: none; }
   .back-link:hover { color: var(--bamboo); }
@@ -156,7 +156,7 @@
 
 <header>
   <div class="nav-inner">
-    <a href="index.html" class="logo display">Bamboo<span class="dot">.</span>Blacktop</a>
+    <a href="index.html" class="logo display">Bamboo<span class="dot">.</span>Property Care</a>
     <a href="index.html" class="back-link">&larr; Back to site</a>
   </div>
 </header>
@@ -167,7 +167,7 @@
     <div id="review-form-section">
       <div class="eyebrow">Tell us how it went</div>
       <h1>Leave a review</h1>
-      <p class="subtext">Had work done by Bamboo Blacktop? We'd love to hear about it. Your review is checked before it goes live on the site.</p>
+      <p class="subtext">Had work done by Bamboo Property Care? We'd love to hear about it. Your review is checked before it goes live on the site.</p>
 
       <div id="form-message" class="form-message"></div>
 
@@ -217,7 +217,7 @@
 </main>
 
 <footer>
-  Bamboo Blacktop — Pavement & property maintenance in Taber, Alberta.
+  Bamboo Property Care — Driveway cleaning & property maintenance in Taber, Alberta.
 </footer>
 
 <!-- Supabase JS SDK -->
@@ -226,6 +226,8 @@
 <script src="config.js"></script>
 
 <script>
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
   const form = document.getElementById('review-form');
   const formSection = document.getElementById('review-form-section');
   const thankYou = document.getElementById('thank-you');
@@ -254,15 +256,6 @@
       });
     });
   });
-
-  let supabaseClient = null;
-  try {
-    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  } catch (err) {
-    console.error('Supabase client setup failed:', err);
-    formMessage.textContent = 'This form is not fully set up yet (Supabase connection missing). The form still works below, but submitting will not save anywhere until this is fixed.';
-    formMessage.classList.add('error');
-  }
 
   function validateForm() {
     let isValid = true;
@@ -298,19 +291,13 @@
       return;
     }
 
-    if (!supabaseClient) {
-      formMessage.textContent = 'This form is not connected to Supabase yet, so the review cannot be saved. Please check config.js.';
-      formMessage.classList.add('error');
-      return;
-    }
-
     submitBtn.disabled = true;
     submitBtn.textContent = 'Submitting...';
 
     const { error } = await supabaseClient
       .from('reviews')
       .insert([{
-        customer_name: nameInput.value.trim(),
+        name: nameInput.value.trim(),
         city: cityInput.value.trim() || null,
         rating: parseInt(ratingInput.value, 10),
         review: reviewInput.value.trim(),
