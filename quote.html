@@ -209,7 +209,6 @@
             <label class="choice-option"><input type="checkbox" name="service" value="Window cleaning"> Window cleaning</label>
             <label class="choice-option"><input type="checkbox" name="service" value="Lawn cutting"> Lawn cutting</label>
             <label class="choice-option"><input type="checkbox" name="service" value="Junk removal"> Junk removal</label>
-            <label class="choice-option"><input type="checkbox" name="service" value="Car cleaning"> Car cleaning</label>
           </div>
           <div class="field-error" id="service-error">Please select at least one service.</div>
         </fieldset>
@@ -302,7 +301,9 @@
     });
   });
 
+  // ============================================================
   // Show the crack length field only when "Crack resealing" is checked
+  // ============================================================
   const crackLengthField = document.getElementById('crack-length-field');
   const crackCheckbox = document.querySelector('input[name="service"][value="Crack resealing"]');
   crackCheckbox.addEventListener('change', () => {
