@@ -224,6 +224,12 @@
           <div class="field-error" id="size-error">Please select a driveway size.</div>
         </fieldset>
 
+        <!-- Only shown when "Crack resealing" is checked above -->
+        <div id="crack-length-field" style="display:none;">
+          <label for="crack_length">Approximate crack length <span class="optional-tag">(in feet, helps us quote accurately)</span></label>
+          <input type="text" id="crack_length" name="crack_length" maxlength="20" placeholder="e.g. 15 feet, or 'not sure'">
+        </div>
+
         <div>
           <label for="photos">Upload photos <span class="optional-tag">(optional)</span></label>
           <label class="photo-drop" for="photos">
@@ -294,6 +300,13 @@
       tag.textContent = file.name;
       photoPreviewList.appendChild(tag);
     });
+  });
+
+  // Show the crack length field only when "Crack resealing" is checked
+  const crackLengthField = document.getElementById('crack-length-field');
+  const crackCheckbox = document.querySelector('input[name="service"][value="Crack resealing"]');
+  crackCheckbox.addEventListener('change', () => {
+    crackLengthField.style.display = crackCheckbox.checked ? 'block' : 'none';
   });
 
   let supabaseClient = null;
@@ -393,6 +406,7 @@
         address: addressInput.value.trim(),
         services: services,
         driveway_size: size,
+        crack_length: document.getElementById('crack_length').value.trim() || null,
         photo_urls: photoUrls || null,
         timeline: timelineInput.value.trim() || null,
         contacted: false
